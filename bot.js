@@ -1,5 +1,18 @@
 const { Client, GatewayIntentBits, Partials, EmbedBuilder } = require('discord.js');
+const http = require('http');
 const afkUsers = new Map();
+
+// Tạo server đơn giản để giữ bot online trên Render
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot is up and running!\n');
+});
+
+// Khởi động server trên một cổng mà Render chỉ định
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+});
 const afkTags = new Map();  // Lưu trữ các thông tin về ai đã tag người dùng AFK
 
 // Tạo bot với các quyền intents và partials cần thiết
